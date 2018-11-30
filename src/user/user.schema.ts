@@ -1,11 +1,11 @@
-/**
- *  用户建模
- */
+import { Schema } from 'mongoose';
 
-import * as mongoose from 'mongoose';
-
-export const UserSchema = new mongoose.Scheme({
-    name: String,
-    email: String,
-    password: String
+const UserSchema = new Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: String, required: true }
 });
+
+export {
+    UserSchema
+};
