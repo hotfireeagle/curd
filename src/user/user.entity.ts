@@ -1,5 +1,6 @@
 import { Entity, Column, ObjectIdColumn, ObjectID, PrimaryGeneratedColumn } from 'typeorm';
-import crypto from 'crypto';
+import * as crypto from 'crypto';
+import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 @Entity()
 export class User {
@@ -12,6 +13,8 @@ export class User {
     @Column({
         default: ''
     })
+    @IsNotEmpty()
+    @IsString()
     public name: string;
 
     @Column({
@@ -19,4 +22,8 @@ export class User {
                 .update('i')
                 .digest('hex')
     })
+    @IsNotEmpty()
+    @IsString()
+    @MinLength(9)
+    public password: string
 }
