@@ -10,10 +10,15 @@
     "mongoose": "^5.4.1",
     "morgan": "^1.9.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "cross-env": "^5.2.0",
+    "mocha": "^5.2.0",
+    "supertest": "^3.3.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./app.js"
+    "test": "cross-env NODE_ENV=test ./node_modules/mocha/bin/mocha",
+    "dev": "cross-env NODE_ENV=development nodemon ./app.js"
   },
   "repository": {
     "type": "git",
