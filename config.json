@@ -1,3 +1,11 @@
 {
-    "mongodbUrl": "mongodb://localhost:27017/blog"
+    "mongodbUrl": "mongodb://localhost:27017/blog",
+    "tokenPayload": {
+        "iss": "blog.hahahai.com",
+        "sub": "studyBlog",
+        "name": "hahahaiBlog",
+        "admin": true
+    },
+    "tokenSecret": "ASDFJKlklxzxvbnerwesa",
+    "tokenMaxDay": 20
 }

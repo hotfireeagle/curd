@@ -1,10 +1,10 @@
 const AdminModel = require('../model/admin');
 const crypto = require('crypto');
 const formidable = require('formidable');
+const jwt = require('jsonwebtoken');
 
-/**
- *  FEATURE: 不支持注册管理员用户
- */
+const config = require('../config.json');
+
 class AdminController {
     constructor() {
         this.login = this.login.bind(this);
@@ -12,6 +12,12 @@ class AdminController {
         this.md5 = this.md5.bind(this);
     }
 
+    /**
+     * 管理员登录接口，登录成功后将token存储到MongoDB中
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
     async login(req, res, next) {
         const form = new formidable.IncomingForm();
 
@@ -52,10 +58,21 @@ class AdminController {
                         message: '密码错误'
                     });
                 } else {
-                    res.send({
-                        status: 1,
-                        message: '登录成功'
-                    });
+                    let token = jwt.sign(config.tokenPayload, config.tokenSecret, { expiresIn: 24*60*60*config.tokenMaxDay });
+                    admin.token = token;
+                    try {
+                        await AdminModel.updateOne({userName}, {token});        // 将该用户所对应的token存储到MongoDB
+                        res.header("Sin-Access-Token", token);                  // 将该用户所对应的token发回给客户端
+                        res.send({
+                            status: 1,
+                            message: '登录成功'
+                        });
+                    } catch(err) {
+                        res.send({
+                            status: 0,
+                            message: '更新token的时候发生错误'
+                        });
+                    }
                 }
             } catch(err) {
                 res.send({
