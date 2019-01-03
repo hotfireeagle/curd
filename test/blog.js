@@ -4,6 +4,7 @@ const app = require('../app');
 
 const expect = chai.expect;
 
+// TODO: 在测试过程中，会测试新增的操作，但是测试过程中最好不要加入无效数据，所以在新增之后最好在将其进行删除
 describe('blog module test', function() {
     let request, token;
     let newArticleTitle = 'from mocha run npm test'
@@ -18,6 +19,21 @@ describe('blog module test', function() {
             let response = JSON.parse(res.text);
             expect(response).to.have.property('status').and.to.equal(1);
             token = res.headers['sin-access-token'];
+        } catch(err) {
+            throw new Error(err);
+        }
+    });
+
+    /** 在这里执行删除操作，因为在新增的时候统一都是新增的标题为newArticleTitle，所以在完成该测试用例之后直接将这个标题的删除即可 */
+    after(async function() {
+        try {
+            let res = await supertest(app)
+                .get(`/blog/deleteByTitle?title=${newArticleTitle}`)
+                .set('Sin-Access-Token', token)
+                .set('Accept', 'application/json')
+                .expect(200);
+            let response = JSON.parse(res.text);
+            expect(response).to.have.property('status').and.to.equal(1);
         } catch(err) {
             throw new Error(err);
         }
