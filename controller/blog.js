@@ -134,6 +134,63 @@ class BlogController {
             });
         });
     }
+
+    /**
+     *  更新文章的接口,根据id来进行删除，URL格式形如：/blog/update，这是一个POST请求，文章id等修改数据都在body里面
+     *  POST 传递的参数有：{ id: required, title: required, tag, content, love, views }
+     */
+    async updateBlog(req, res, next) {
+        let token = req.headers['sin-access-token'] || req.headers['Sin-Access-Token'];
+        if (!isLogin(token)) {
+            res.json({
+                status: 0,
+                message: '未登录'
+            });
+            return;
+        }
+        let form = new formidable.IncomingForm();
+        form.parse(req, async (err, fields, files) => {
+            if (err) {
+                res.json({
+                    status: 0,
+                    message: '解析参数发生错误'
+                });
+                return;
+            }
+            let { id, title, tag, content, love, views } = fields;
+            try {
+                if (!id) { throw new Error('缺少文章id'); }
+                if (!title) { throw new Error('缺少文章标题'); }
+            } catch(err) {
+                res.json({
+                    status: 0,
+                    message: err.message
+                });
+            }
+            try {
+                id = mongoose.Types.ObjectId(id);
+            } catch(err) {
+                res.json({
+                    status: 0,
+                    message: '文章id参数不合法'
+                });
+                return;
+            }
+            // 更新指定id的文章
+            try {
+                await BlogModel.findOneAndUpdate({ _id: id }, { $set: { title, tag, content, love, views } });
+                res.json({
+                    status: 1,
+                    message: '更新文章成功'
+                });
+            } catch(err) {
+                res.json({
+                    status: 0,
+                    message: '更新文章的过程中发生错误'
+                });
+            }
+        });
+    }
 }
 
 module.exports = new BlogController();
