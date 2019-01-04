@@ -148,4 +148,45 @@ describe('blog module test', function() {
                 done();
             })
     });
+
+    /** 测试不带token进行更新操作 */
+    it('update the article without the token should be error', function(done) {
+        supertest(app)
+            .post('/blog/update')
+            .set('Accept', 'application/json')
+            .send({ id: articleId, title: newArticleTitle })
+            .expect(200)
+            .end((err, res) => {
+                if (err) {
+                    throw new Error(err);
+                }
+                let response = JSON.parse(res.text);
+                expect(response).to.have.property('status').and.to.equal(0);
+                done();
+            })
+    });
+
+    /** 测试获取文章列表数据的接口 */
+    it('get the articles should be ok', function(done) {
+        supertest(app)
+            .post('/blog/blogs')
+            .set('Accept', 'application/json')
+            .send({ length: 5 })
+            .expect(200)
+            .end((err, res) => {
+                if (err) {
+                    throw new Error(err);
+                }
+                let response = JSON.parse(res.text);
+                expect(response).to.have.property('status').and.to.equal(1);
+                expect(response).to.have.property('totalElements');
+                expect(response).to.have.property('data').and.to.be.an('array');
+                let totalElements = response.totalElements;
+                if (totalElements >= 5) {
+                    let len = response.data.length;
+                    expect(len).to.equal(5);
+                }
+                done();
+            })
+    });
 });
