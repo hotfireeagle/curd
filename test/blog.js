@@ -120,4 +120,12 @@ describe('blog module test', function() {
                 done();
             })
     });
+
+    it('update the article with the right params should be ok', function(done) {
+        supertest(app)
+            .post('/blog/update')
+            .set('Sin-Access-Token', token)
+            .set('Accept', 'application/json')
+            .send({ id: });
+    });
 });

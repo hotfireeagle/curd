@@ -191,6 +191,23 @@ class BlogController {
             }
         });
     }
+
+    /**
+     *  获取文章列列表数据，无需登录；TODO: 符合antd分页标准，POST请求，每页多少条数据length以及第几页page和tag信息都放在body里面
+     */
+    async getBlogs(req, res, next) {
+        let form = new formidable.IncomingForm();
+        form.parse(req, async (err, fields, files) => {
+            if (err) {
+                res.json({
+                    status: 0,
+                    message: '参数解析错误'
+                });
+                return;
+            }
+            let { length=10, page=1, tag='' } = fields;
+        });
+    }
 }
 
 module.exports = new BlogController();
