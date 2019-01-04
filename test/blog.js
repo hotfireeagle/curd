@@ -89,4 +89,35 @@ describe('blog module test', function() {
                 done();
             })
     });
+
+    it('delete a article with the correct _id should be ok', function(done) {
+        supertest(app)
+            .get('/blog/delete?id=5c2cc6e4b0958e0bd9e42cd2')
+            .set('Sin-Access-Token', token)
+            .set('Accept', 'application/json')
+            .expect(200)
+            .end((err, res) => {
+                if (err) {
+                    throw new Error(err);
+                }
+                let response = JSON.parse(res.text);
+                expect(response).to.have.property('status').and.to.equal(1);
+                done();
+            })
+    });
+
+    it('delete a article but without token should be error', function(done) {
+        supertest(app)
+            .get('/blog/delete?id=5c2cc6e4b0958e0bd9e42cd2')
+            .set('Accept', 'application/json')
+            .expect(200)
+            .end((err, res) => {
+                if (err) {
+                    throw new Error(err);
+                }
+                let response = JSON.parse(res.text);
+                expect(response).to.have.property('status').and.to.equal(0);
+                done();
+            })
+    });
 });
