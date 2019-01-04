@@ -7,5 +7,6 @@ blog.post('/new', BlogController.createBlog);
 blog.get('/delete', BlogController.deleteBlog);
 blog.get('/deleteByTitle', BlogController.deleteBlogByTitle);
 blog.post('/update', BlogController.updateBlog);
+blog.post('/blogs', BlogController.getBlogs);
 
 module.exports = blog;

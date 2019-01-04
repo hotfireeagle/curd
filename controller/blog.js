@@ -193,10 +193,11 @@ class BlogController {
     }
 
     /**
-     *  获取文章列列表数据，无需登录；TODO: 符合antd分页标准，POST请求，每页多少条数据length以及第几页page和tag信息都放在body里面
+     *  获取文章列列表数据，POST请求，每页多少条数据length以及第几页page和tag信息都放在body里面
      */
     async getBlogs(req, res, next) {
         let form = new formidable.IncomingForm();
+        let totalElements;
         form.parse(req, async (err, fields, files) => {
             if (err) {
                 res.json({
@@ -205,7 +206,23 @@ class BlogController {
                 });
                 return;
             }
-            let { length=10, page=1, tag='' } = fields;
+            let { length=1, page=1, tag='' } = fields;
+            let findParams = {};
+            tag && (findParams.tag = tag);
+            try {
+                totalElements = await BlogModel.count(findParams);
+                let result = await BlogModel.find(findParams).sort({"createTime": -1}).skip((page-1)*length).limit(length);
+                res.json({
+                    status: 1,
+                    data: result,
+                    totalElements,
+                    page,
+                    message: '查询成功'
+                });
+            } catch(err) {
+                console.error(err);
+                res.json({ status: 0, message: '查询数据库失败' });
+            }
         });
     }
 }

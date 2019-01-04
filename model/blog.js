@@ -11,6 +11,8 @@ const BlogSchema = new Schema({
     love: { type: Number, default: 0 },                   // 点赞次数
 });
 
+BlogSchema.index({ createTime: 1 });
+
 const BlogModel = mongoose.model('Blog', BlogSchema);
 
 module.exports = BlogModel;

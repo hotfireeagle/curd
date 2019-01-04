@@ -7,8 +7,10 @@ const expect = chai.expect;
 // TODO: 在测试过程中，会测试新增的操作，但是测试过程中最好不要加入无效数据，所以在新增之后最好在将其进行删除
 describe('blog module test', function() {
     let request, token;
-    let newArticleTitle = 'from mocha run npm test'
+    let newArticleTitle = 'from mocha run npm test';
+    let articleId;
 
+    // 顺便在这里测试获取文章的接口（什么参数都不传）
     before(async function() {
         try {
             let res = await supertest(app)
@@ -19,6 +21,15 @@ describe('blog module test', function() {
             let response = JSON.parse(res.text);
             expect(response).to.have.property('status').and.to.equal(1);
             token = res.headers['sin-access-token'];
+
+            let idRes = await supertest(app)
+                .post('/blog/blogs')
+                .set('Accept', 'application/json')
+                .expect(200);
+            let idResponse = JSON.parse(idRes.text);
+            expect(idResponse).to.have.property('status').and.to.equal(1);
+            expect(idResponse).to.have.property('data').and.to.be.an('array');
+            articleId = idResponse['data'][0]['_id'];
         } catch(err) {
             throw new Error(err);
         }
@@ -121,11 +132,20 @@ describe('blog module test', function() {
             })
     });
 
+    /** 测试能否更新，但是对于更新操作来说，是使用文章的_id来标识文章的，所以这里先要调取一下获取文章id的方法 */
     it('update the article with the right params should be ok', function(done) {
         supertest(app)
             .post('/blog/update')
             .set('Sin-Access-Token', token)
             .set('Accept', 'application/json')
-            .send({ id: });
+            .send({ id: articleId, title: newArticleTitle })
+            .end((err, res) => {
+                if (err) {
+                    throw new Error(err);
+                }
+                let response = JSON.parse(res.text);
+                expect(response).to.have.property('status').and.to.equal(1);
+                done();
+            })
     });
 });
