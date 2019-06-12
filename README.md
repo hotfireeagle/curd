@@ -1,12 +1,36 @@
-## 1.内容管理后台
+# curd
 
-- [x] 管理员登录功能
-- [x] 管理员登录成功后将token和用户进行关联存储到MongoDB里面，并且把token放到响应头里面发回给客户
-- [x] 完成对博文模块的建模，新增博文功能必须需要先登录
-- [x] 使用测试框架
-- [x] 删除文章
-- [x] 删除文章接口编写测试用例
-- [x] 修改文章接口
-- [x] 获取指定篇文章
-- [x] 修改文章的测试用例以及获取文章的测试用例
-- [ ] 文章标签模块
+learn egg
+      
+技术栈介绍：使用egg.js+mysql+sequelize
+      
+
+## QuickStart
+
+<!-- add docs here for user -->
+
+see [egg docs][egg] for more detail.
+
+### Development
+
+```bash
+$ npm i
+$ npm run dev
+$ open http://localhost:7001/
+```
+
+### Deploy
+
+```bash
+$ npm start
+$ npm stop
+```
+
+### npm scripts
+
+- Use `npm run lint` to check code style.
+- Use `npm test` to run unit test.
+- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
+
+
+[egg]: https://eggjs.org
