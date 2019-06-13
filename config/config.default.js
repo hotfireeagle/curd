@@ -26,6 +26,11 @@ module.exports = appInfo => {
     database: "curd"
   };
 
+  config.jwt = {
+    enable: true,
+    ignore: [''],                     // 在这里声明无需拦截登录的接口
+  };
+
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',

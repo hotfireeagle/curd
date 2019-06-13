@@ -34,3 +34,7 @@ $ npm stop
 
 
 [egg]: https://eggjs.org
+       
+### 待办项
+       
+1.完成用户表建模，完成注册，登录逻辑

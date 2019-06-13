@@ -10,7 +10,11 @@ module.exports = app => {
             primaryKey: true,
             defaultValue: UUIDV4
         },
-        name: {
+        nickname: {
+            type: STRING,
+            allowNull: false
+        },
+        sex: {
             type: STRING,
             allowNull: false
         },
@@ -19,7 +23,7 @@ module.exports = app => {
             allowNull: true,
             defaultValue: false 
         },
-        openId: {
+        openid: {
             type: STRING(38),
             allowNull: false
         },

@@ -21,5 +21,14 @@ module.exports = {
             }
         };
         R.forEachObjIndexed(operation, schemaObj);
+
+        tableConfig = tableConfig || {
+            version: true,
+            freezeTableName: true,
+            getterMethods: {},
+            setterMethods: {}
+        };
+        
+        return app.model.define(tableName, tableRowObj, tableConfig);
     }
 };
