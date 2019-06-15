@@ -1,8 +1,13 @@
+/**
+ * README: 得支持多设备登录，因此需要保证在这几个端上面都是对应着一个token。
+ * 既然是这样的话，那么就需要在登录的时候别立马签发一个新的token，先看看库里是否存在这个用户的token，如果有的话，那么就签发这个token，同时更新时间
+ */
+
 const fs = require("fs");
 const path = require("path");
 const jwt = require("jsonwebtoken");
 
-const PEM_PATH = path.join(__dirname, '../../rsa_public_key.pen');
+const PEM_PATH = path.join(__dirname, '../../rsa_public_key.pem');
 const STATUS = { "NO_USER": -1, "EXPIRED": 0, "OK": 1 };
 
 /** 获取公钥内容 */
@@ -34,8 +39,8 @@ module.exports = (options, app) => {
         if (authToken) {
             const verifyResult = verifyToken(authToken);
             switch(verifyResult.status) {
-                case STATUS.OK:                                     // TODO:这个token是系统签发的，但是这样就可以通过验证了吗？多设备登录呢？
-
+                case STATUS.OK:                                    // 只要是平台所签发的token，就认为是认证通过的
+                    await next();
                     break;
                 case STATUS.NO_USER:
                     ctx.body = { status: 2, errorMes: "不存在该用户" };

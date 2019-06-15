@@ -16,7 +16,7 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1560326892448_7683';
 
   // add your middleware config here
-  config.middleware = [];
+  config.middleware = [ "jwt",  "errorHandler" ];
 
   config.sequelize = {
     dialect: "mysql",
@@ -28,7 +28,17 @@ module.exports = appInfo => {
 
   config.jwt = {
     enable: true,
-    ignore: [''],                     // 在这里声明无需拦截登录的接口
+    ignore: [ "/api/user/login", "/api/user/register", "/api/v1/index" ],                     // 在这里声明无需拦截登录的接口
+  };
+
+  config.errorHandler = {
+    match: "/api"
+  };
+
+  config.security = {
+    csrf: {
+      enable: false
+    }
   };
 
   // add your user config here

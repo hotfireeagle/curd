@@ -1,31 +1,30 @@
 /**
- *  README: 这个app并不一定是Egg 实例，但是在这个对象里面一定会有Sequelize对象
+ *  README: 这个app并不一定是Egg实例，但是在这个对象里面一定会有Sequelize对象
  */
 module.exports = app => {
-    const { STRING, UUIDV4, BOOLEAN, DATE } = app.Sequelize;
+    const { STRING, TINYINT, DATE } = app.Sequelize;
     return {
-        uuid: {
+        id: {
             type: STRING(38),
             allowNull: false,
-            primaryKey: true,
-            defaultValue: UUIDV4
+            primaryKey: true
         },
         nickname: {
             type: STRING,
-            allowNull: false
+            allowNull: true
         },
         sex: {
             type: STRING,
-            allowNull: false
+            allowNull: true
         },
         admin: {
-            type: BOOLEAN,
+            type: TINYINT(1),
             allowNull: true,
-            defaultValue: false 
+            defaultValue: 0
         },
         openid: {
             type: STRING(38),
-            allowNull: false
+            allowNull: true
         },
         phone: {
             type: STRING(20),
@@ -35,12 +34,12 @@ module.exports = app => {
             type: STRING,
             allowNull: true
         },
-        createdAt: {
+        created_at: {
             type: DATE,
             allowNull: true,
             defaultValue: new Date()
         },
-        updatedAt: {
+        updated_at: {
             type: DATE,
             allowNull: true,
             defaultValue: new Date()
