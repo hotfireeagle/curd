@@ -16,29 +16,29 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1560326892448_7683';
 
   // add your middleware config here
-  config.middleware = [ "jwt",  "errorHandler" ];
+  config.middleware = [ 'jwt', 'errorHandler' ];
 
   config.sequelize = {
-    dialect: "mysql",
-    host: "127.0.0.1",
-    password: "000000",               // 这是一个测试密码，实际运行时需替换
+    dialect: 'mysql',
+    host: '127.0.0.1',
+    password: '000000', // 这是一个测试密码，实际运行时需替换
     port: 3306,
-    database: "curd"
+    database: 'curd',
   };
 
   config.jwt = {
     enable: true,
-    ignore: [ "/api/user/login", "/api/user/register", "/api/v1/index" ],                     // 在这里声明无需拦截登录的接口
+    ignore: [ '/api/user/login', '/api/user/register' ], // 在这里声明无需拦截登录的接口
   };
 
   config.errorHandler = {
-    match: "/api"
+    match: '/api',
   };
 
   config.security = {
     csrf: {
-      enable: false
-    }
+      enable: false,
+    },
   };
 
   // add your user config here

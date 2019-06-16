@@ -1,19 +1,19 @@
-const uuid = require("uuid/v4");
+const uuid = require('uuid/v4');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     try {
-      await queryInterface.bulkInsert("users", [{
+      await queryInterface.bulkInsert('users', [{
         uuid: uuid(),
-        name: "hahahai",
+        name: 'hahahai',
         admin: 1,
         openId: uuid(),
-        phone: "15170307030",
-        password: "testpassword",
+        phone: '15170307030',
+        password: 'testpassword',
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
       }]);
-    } catch(e) {
+    } catch (e) {
       console.error(e);
     }
   },
@@ -26,5 +26,5 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
-  }
+  },
 };

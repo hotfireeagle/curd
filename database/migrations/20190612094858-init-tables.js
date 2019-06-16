@@ -1,8 +1,8 @@
 'use strict';
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
-const SCHEMA_PATH = path.join(__dirname, "../../app/schema");
+const SCHEMA_PATH = path.join(__dirname, '../../app/schema');
 
 module.exports = {
   /** 创建所有表 */
@@ -17,7 +17,7 @@ module.exports = {
           await queryInterface.createTable(tableName, schema);
         }
       });
-    } catch(e) {
+    } catch (e) {
       console.error('wtf', e);
     }
   },
@@ -25,5 +25,5 @@ module.exports = {
   /** 删除所有表 */
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropAllTables();
-  }
+  },
 };
