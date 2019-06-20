@@ -2,7 +2,7 @@
 
 const { app } = require('egg-mock/bootstrap');
 
-describe('test/app/controller/user.test.js', () => {
+describe('测试controller.user文件', () => {
 
   it('/api/user/register: 参数校验不通过的时候HTTP响应码应该是422', () => {
     return app.httpRequest()

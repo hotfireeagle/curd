@@ -20,10 +20,7 @@ module.exports = app => {
       where: { phone },
       attributes: [ 'id', 'password' ],
     };
-    let response = null;
-    try {
-      response = await users.findOne(sqlCondition);
-    } catch (err) { console.error('findUserByPhone发生错误--->', err); }
+    const response = await users.findOne(sqlCondition);
     return response;
   };
 
