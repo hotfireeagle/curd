@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  *  README: 这个app并不一定是Egg实例，但是在这个对象里面一定会有Sequelize对象
  */
@@ -43,6 +45,6 @@ module.exports = app => {
       type: DATE,
       allowNull: true,
       defaultValue: new Date(),
-    }
+    },
   };
 };

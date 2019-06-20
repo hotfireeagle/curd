@@ -23,7 +23,7 @@ module.exports = {
   },
 
   /** 删除所有表 */
-  down: async (queryInterface, Sequelize) => {
+  down: async queryInterface => {
     await queryInterface.dropAllTables();
   },
 };

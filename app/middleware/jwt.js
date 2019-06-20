@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * README: 得支持多设备登录，因此需要保证在这几个端上面都是对应着一个token。
  * 既然是这样的话，那么就需要在登录的时候别立马签发一个新的token，先看看库里是否存在这个用户的token，如果有的话，那么就签发这个token，同时更新时间
@@ -33,7 +35,7 @@ const verifyToken = token => {
   return { status: STATUS.EXPIRED, data: null };
 };
 
-module.exports = (options, app) => {
+module.exports = () => {
   return async function userInterceptor(ctx, next) {
     let authToken = ctx.header.authorization; // 从客户端中的请求头中取出token数据
     if (authToken) {
@@ -43,7 +45,7 @@ module.exports = (options, app) => {
       let verifyResult;
       try {
         verifyResult = verifyToken(authToken);
-      } catch(err) {
+      } catch (err) {
         ctx.body = { status: 2, errorMes: 'token校验发生错误', obj: null };
         return;
       }

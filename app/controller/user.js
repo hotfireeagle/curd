@@ -1,10 +1,13 @@
+'use strict';
+
 const Controller = require('egg').Controller;
 
 class UserController extends Controller {
 
-  /** 微信登录的方法 */
+  /** TODO: 微信登录的方法 */
   async loginByWechat() {
-
+    const { ctx } = this;
+    ctx.body = { status: 1, obj: null, errorMes: null };
   }
 
   /** 手机号登录的方法，登录成功的话签发token */
@@ -13,7 +16,7 @@ class UserController extends Controller {
     const { phone, password } = ctx.request.body;
     const rule = {
       phone: { type: 'number', required: true },
-      password: { type: 'string', required: true }
+      password: { type: 'string', required: true },
     };
     ctx.validate(rule, ctx.request.body); // 验证失败的话，会抛错，错误会被定义的中间件给捕获
     const userObj = await ctx.service.user.findUserByPhone(phone);
@@ -27,9 +30,10 @@ class UserController extends Controller {
     ctx.body = { status: 1, obj: token, errorMes: null };
   }
 
-  /** 微信号注册方法 */
+  /** TODO: 微信号注册方法 */
   async registerByWechat() {
-
+    const { ctx } = this;
+    ctx.body = { status: 1, obj: null, errorMes: null };
   }
 
   /** 手机号注册新用户，手机号和密码是必填项 */

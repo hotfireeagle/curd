@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  *  README: 整个应用常用到的工具方法
  */
@@ -28,7 +30,7 @@ module.exports = {
    * @param {string} password : 用户输入的原密码
    */
   encodePassword(password) {
-    const result = md5(md5(password)+md5(password).substr(1,6));
+    const result = md5(md5(password) + md5(password).substr(1, 6));
     return result;
-  }
+  },
 };

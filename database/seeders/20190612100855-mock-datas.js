@@ -1,7 +1,9 @@
+'use strict';
+
 const uuid = require('uuid/v4');
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async queryInterface => {
     try {
       await queryInterface.bulkInsert('users', [{
         uuid: uuid(),
@@ -18,7 +20,7 @@ module.exports = {
     }
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: () => {
     /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.
