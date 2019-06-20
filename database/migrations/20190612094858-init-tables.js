@@ -18,7 +18,7 @@ module.exports = {
         }
       });
     } catch (e) {
-      console.error('wtf', e);
+      console.error(e);
     }
   },
 
